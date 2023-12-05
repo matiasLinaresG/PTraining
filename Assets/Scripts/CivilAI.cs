@@ -22,6 +22,10 @@ public class CivilAI : MonoBehaviour, ITakeDamage
     private Animator animator;
     private float _health;
 
+    // Contadores
+    private static int woundedCount = 0;
+    private static int deadCount = 0;
+
     public float health
     {
         get { return _health; }
@@ -98,10 +102,19 @@ public class CivilAI : MonoBehaviour, ITakeDamage
         {
             Destroy(gameObject);
             Debug.Log("Civil destroyed!");
+            deadCount++;
+        }
+        else
+        {
+            woundedCount++;
         }
 
         ParticleSystem effect = Instantiate(bloodSplatterFX, contactPoint, Quaternion.LookRotation(weapon.transform.position - contactPoint));
         effect.Stop();
         effect.Play();
+
+        // Imprimir los contadores
+        Debug.Log("Civiles heridos: " + woundedCount);
+        Debug.Log("Civiles muertos: " + deadCount);
     }
 }

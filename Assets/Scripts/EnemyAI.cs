@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyAI : MonoBehaviour, ITakeDamage
@@ -23,6 +22,10 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
 
     [SerializeField] private Transform shootingPosition;
     [SerializeField] private ParticleSystem bloodSplatterFX;
+
+    [Header("Haptic Vest Events")]
+    [SerializeField] private UnityEvent hapticEvent1;
+    [SerializeField] private UnityEvent hapticEvent2;
 
     private bool isShooting;
     private int currentShotsTaken;
@@ -68,7 +71,7 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
 
     private void Update()
     {
-        if(agent.isStopped == false && (transform.position - occupiedCoverSpot.position).sqrMagnitude <= 0.1f)
+        if (agent.isStopped == false && (transform.position - occupiedCoverSpot.position).sqrMagnitude <= 0.1f)
         {
             agent.isStopped = true;
             StartCoroutine(InitializeShootingCO());
@@ -78,6 +81,7 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
             RotateTowardsPlayer();
         }
     }
+
     private IEnumerator InitializeShootingCO()
     {
         HideBehindCover();
@@ -85,11 +89,11 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
         StartShooting();
     }
 
-
     private void HideBehindCover()
     {
         animator.SetTrigger(CROUCH_TRIGGER);
     }
+
     private void StartShooting()
     {
         isShooting = true;
@@ -106,17 +110,26 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
         {
             RaycastHit hit;
             Vector3 direction = player.GetHeadPosition() - shootingPosition.position;
-            if(Physics.Raycast(shootingPosition.position, direction, out hit))
+            if (Physics.Raycast(shootingPosition.position, direction, out hit))
             {
                 Player player = hit.collider.GetComponentInParent<Player>();
                 if (player)
                 {
                     player.TakeDamage(damage);
+                    // Ejecutar uno de los eventos al azar
+                    if (Random.Range(0, 2) == 0)
+                    {
+                        hapticEvent1.Invoke();
+                    }
+                    else
+                    {
+                        hapticEvent2.Invoke();
+                    }
                 }
             }
         }
         currentShotsTaken++;
-        if(currentShotsTaken >= currentMaxShotsToTake)
+        if (currentShotsTaken >= currentMaxShotsToTake)
         {
             StartCoroutine(InitializeShootingCO());
         }
@@ -129,7 +142,7 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
         Quaternion rotation = Quaternion.LookRotation(direction);
         rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
         transform.rotation = rotation;
-    } 
+    }
 
     public void TakeDamage(Weapon weapon, Projectile projectile, Vector3 contactPoint)
     {
@@ -140,6 +153,4 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
         effect.Stop();
         effect.Play();
     }
-
-
 }
