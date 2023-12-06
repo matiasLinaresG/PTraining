@@ -1816,6 +1816,12 @@ MonoBehaviour:
   shootingAccuracy: 100
   shootingPosition: {fileID: 6856845673789273266}
   bloodSplatterFX: {fileID: 19886758, guid: 8c27aeead6d968e4ba986702d6b84335, type: 3}
+  hapticEvent1:
+    m_PersistentCalls:
+      m_Calls: []
+  hapticEvent2:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!195 &7591617645351598606
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1826,7 +1832,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 5.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
