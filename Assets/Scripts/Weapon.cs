@@ -10,7 +10,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 [RequireComponent(typeof(XRGrabInteractable))]
 public class Weapon : MonoBehaviour
 {
-    [SerializeField] protected float shootingForce;
+    [SerializeField] protected float shootingForce=50;
     [SerializeField] protected Transform bulletSpawn;
     [SerializeField] private float recoilForce;
     [SerializeField] private float damage;

@@ -117,7 +117,7 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
                 {
                     player.TakeDamage(damage);
                     // Ejecutar uno de los eventos al azar
-                    if (Random.Range(0, 2) == 0)
+                    if (Random.Range(0, 1) == 0)
                     {
                         hapticEvent1.Invoke();
                     }
