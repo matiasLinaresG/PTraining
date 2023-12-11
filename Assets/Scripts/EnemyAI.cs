@@ -29,9 +29,9 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
     [SerializeField] private UnityEvent hapticEvent1;
     [SerializeField] private UnityEvent hapticEvent2;
 
-    [Header("Scene Transition")]
-    [SerializeField] private string nextSceneName; // Nombre de la siguiente escena
-    
+    //[Header("Scene Transition")]
+    //[SerializeField] private string nextSceneName; // Nombre de la siguiente escena
+
     private int remainingEnemies;
     private bool isShooting;
     private int currentShotsTaken;
@@ -60,7 +60,7 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
         agent = GetComponent<NavMeshAgent>();
         animator.SetTrigger(RUN_TRIGGER);
         _health = startingHealth;
-        remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        // remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
     }
 
     public void Init(Player player, Transform coverSpot)
@@ -108,7 +108,7 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
         currentShotsTaken = 0;
         animator.SetTrigger(SHOOT_TRIGGER);
 
-        PlayEnemyShootSound();
+        //  PlayEnemyShootSound();
     }
 
     public void Shoot()
@@ -117,19 +117,19 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
 
         if (hitPlayer)
         {
-            
+
             RaycastHit hit;
             Vector3 direction = player.GetHeadPosition() - shootingPosition.position;
             if (Physics.Raycast(shootingPosition.position, direction, out hit))
             {
                 Debug.DrawRay(shootingPosition.position, direction, Color.green, 2.0f);
                 Player player = hit.collider.GetComponentInParent<Player>();
-                
+
                 if (player)
                 {
-                    
+
                     player.TakeDamage(damage);
-                   
+
                     // Ejecutar uno de los eventos al azar
                     if (Random.Range(0, 1) == 0)
                     {
@@ -151,7 +151,7 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
                 Debug.LogWarning("Ray did not hit anything.");
             }
         }
-        
+
         currentShotsTaken++;
         if (currentShotsTaken >= currentMaxShotsToTake)
         {
@@ -174,35 +174,36 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
         if (health <= 0)
         {
             Destroy(gameObject);
-            remainingEnemies--;
-            if (remainingEnemies <= 0)
-            {
-                Invoke("LoadNextScene", 30f);
-            }
+            //remainingEnemies--;
+            //if (remainingEnemies <= 0)
+            //{
+            //    Invoke("LoadNextScene", 30f);
+            //}
         }
-            ParticleSystem effect = Instantiate(bloodSplatterFX, contactPoint, Quaternion.LookRotation(weapon.transform.position - contactPoint));
+        ParticleSystem effect = Instantiate(bloodSplatterFX, contactPoint, Quaternion.LookRotation(weapon.transform.position - contactPoint));
         effect.Stop();
         effect.Play();
     }
 
-    private void LoadNextScene()
-    {
-        // Verificar si el nombre de la siguiente escena está configurado
-        if (!string.IsNullOrEmpty(nextSceneName))
-        {
-            // Cargar la siguiente escena
-            SceneManager.LoadScene(nextSceneName);
-        }
-        else
-        {
-            Debug.LogWarning("El nombre de la siguiente escena no está configurado en el inspector.");
-        }
-    }
+    /*
+     private void LoadNextScene()
+     {
+         // Verificar si el nombre de la siguiente escena está configurado
+         if (!string.IsNullOrEmpty(nextSceneName))
+         {
+             // Cargar la siguiente escena
+             SceneManager.LoadScene(nextSceneName);
+         }
+         else
+         {
+             Debug.LogWarning("El nombre de la siguiente escena no está configurado en el inspector.");
+         }
+     } 
 
-    private void PlayEnemyShootSound()
-    {
-        audioManager.Play("EnemyShootSound");
-    }
 
+     private void PlayEnemyShootSound()
+     {
+         audioManager.Play("EnemyShootSound");
+     }
+      */
 }
-
