@@ -8,19 +8,39 @@ public class Connection : MonoBehaviour
 {
     private SerialPort serialPort = null;
     string portName = "COM1";
-    int baudRate = 115200;
+    int baudRate = 9600;
     int readTimeOut = 100;
     // Start is called before the first frame update
     void Start()
     {
-        try {
-            serialPort = new SerialPort();
-            serialPort.PortName = portName;
-            serialPort.BaudRate = baudRate;
-            serialPort.ReadTimeout = readTimeOut;
-            serialPort.Open();
-        } catch (System.Exception e) {
-            Debug.Log(e.Message);
+        string[] ports = SerialPort.GetPortNames();
+
+        foreach (string port in ports)
+        {
+            try
+            {
+                serialPort = new SerialPort();
+                serialPort.PortName = port;
+                serialPort.BaudRate = baudRate;
+                serialPort.ReadTimeout = readTimeOut;
+                serialPort.Open();
+
+                if (serialPort.IsOpen)
+                {
+                    portName = port; // Set the correct port name
+                    Debug.Log("Connected to port: " + port);
+                    break; // Exit the loop once a connection is successful
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning("Failed to connect to port " + port + ": " + e.Message);
+            }
+        }
+
+        if (string.IsNullOrEmpty(portName))
+        {
+            Debug.LogError("Failed to connect to any available ports.");
         }
     }
 
