@@ -813,7 +813,7 @@ Transform:
   m_GameObject: {fileID: 259566948}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0005, y: 0.0719, z: 0.247}
+  m_LocalPosition: {x: -0.0005, y: 0.0719, z: 0.289}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2252,9 +2252,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9155f5729e9c23248817166f3f182c9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingForce: 10
+  shootingForce: 50
   bulletSpawn: {fileID: 259566949}
-  recoilForce: 2
+  recoilForce: 20
   damage: 100
   bulletPrefab: {fileID: -3281485610557029835, guid: 28b50149f29a723429270c4ae38ebbae, type: 3}
 --- !u!1001 &752135034
@@ -4211,7 +4211,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9039354818175742212, guid: 5dce19da93842034188ca2615a5d2c58, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4418,7 +4418,7 @@ Transform:
   m_GameObject: {fileID: 1572651645}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0005, y: 0.0719, z: 0.247}
+  m_LocalPosition: {x: -0.0005, y: 0.0719, z: 0.278}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
