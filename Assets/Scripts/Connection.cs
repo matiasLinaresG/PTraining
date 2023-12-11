@@ -7,8 +7,8 @@ using System.IO.Ports;
 public class Connection : MonoBehaviour
 {
     private SerialPort serialPort = null;
-    string portName = "COM1";
-    int baudRate = 9600;
+    string portName = "ESP32_BT";
+    int baudRate = 115200;
     int readTimeOut = 100;
     // Start is called before the first frame update
     void Start()
