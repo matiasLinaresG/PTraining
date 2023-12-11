@@ -108,14 +108,19 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
 
         if (hitPlayer)
         {
+            
             RaycastHit hit;
             Vector3 direction = player.GetHeadPosition() - shootingPosition.position;
             if (Physics.Raycast(shootingPosition.position, direction, out hit))
             {
+                Debug.DrawRay(shootingPosition.position, direction, Color.green, 2.0f);
                 Player player = hit.collider.GetComponentInParent<Player>();
+                
                 if (player)
                 {
+                    
                     player.TakeDamage(damage);
+                   
                     // Ejecutar uno de los eventos al azar
                     if (Random.Range(0, 1) == 0)
                     {
@@ -126,8 +131,18 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
                         hapticEvent2.Invoke();
                     }
                 }
+                else
+                {
+                    Debug.LogWarning("Ray hit something, but it's not the player.");
+                }
+            }
+            else
+            {
+                Debug.DrawRay(shootingPosition.position, direction, Color.red, 2.0f);
+                Debug.LogWarning("Ray did not hit anything.");
             }
         }
+        
         currentShotsTaken++;
         if (currentShotsTaken >= currentMaxShotsToTake)
         {

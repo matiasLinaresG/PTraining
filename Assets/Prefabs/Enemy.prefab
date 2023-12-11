@@ -1812,8 +1812,8 @@ MonoBehaviour:
   minShotsToTake: 5
   maxShotsToTake: 10
   rotationSpeed: 250
-  damage: 30
-  shootingAccuracy: 100
+  damage: 20
+  shootingAccuracy: 37.1
   shootingPosition: {fileID: 6856845673789273266}
   bloodSplatterFX: {fileID: 19886758, guid: 8c27aeead6d968e4ba986702d6b84335, type: 3}
   hapticEvent1:
@@ -2049,7 +2049,7 @@ Transform:
   m_GameObject: {fileID: 2518520688289000461}
   serializedVersion: 2
   m_LocalRotation: {x: 0.00000041723231, y: 0.00000037252886, z: -0.021226203, w: 0.9997747}
-  m_LocalPosition: {x: 0.0002, y: 0.0718, z: 0.2096}
+  m_LocalPosition: {x: 0.0002, y: 0.0718, z: 0.2409}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
