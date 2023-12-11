@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyAI : MonoBehaviour, ITakeDamage
@@ -27,6 +28,10 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
     [SerializeField] private UnityEvent hapticEvent1;
     [SerializeField] private UnityEvent hapticEvent2;
 
+    [Header("Scene Transition")]
+    [SerializeField] private string nextSceneName; // Nombre de la siguiente escena
+    
+    private int remainingEnemies;
     private bool isShooting;
     private int currentShotsTaken;
     private int currentMaxShotsToTake;
@@ -54,6 +59,7 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
         agent = GetComponent<NavMeshAgent>();
         animator.SetTrigger(RUN_TRIGGER);
         _health = startingHealth;
+        remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
     }
 
     public void Init(Player player, Transform coverSpot)
@@ -163,9 +169,31 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
     {
         health -= weapon.GetDamage();
         if (health <= 0)
+        {
             Destroy(gameObject);
-        ParticleSystem effect = Instantiate(bloodSplatterFX, contactPoint, Quaternion.LookRotation(weapon.transform.position - contactPoint));
+            remainingEnemies--;
+            if (remainingEnemies <= 0)
+            {
+                Invoke("LoadNextScene", 30f);
+            }
+        }
+            ParticleSystem effect = Instantiate(bloodSplatterFX, contactPoint, Quaternion.LookRotation(weapon.transform.position - contactPoint));
         effect.Stop();
         effect.Play();
     }
+
+    private void LoadNextScene()
+    {
+        // Verificar si el nombre de la siguiente escena está configurado
+        if (!string.IsNullOrEmpty(nextSceneName))
+        {
+            // Cargar la siguiente escena
+            SceneManager.LoadScene(nextSceneName);
+        }
+        else
+        {
+            Debug.LogWarning("El nombre de la siguiente escena no está configurado en el inspector.");
+        }
+    }
 }
+
