@@ -11,6 +11,7 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
     const string CROUCH_TRIGGER = "Crouch";
     const string SHOOT_TRIGGER = "Shoot";
 
+    [SerializeField] private AudioManager audioManager;
     [SerializeField] private float startingHealth;
     [SerializeField] private float minTimeUnderCover;
     [SerializeField] private float maxTimeUnderCover;
@@ -106,6 +107,8 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
         currentMaxShotsToTake = UnityEngine.Random.Range(minShotsToTake, maxShotsToTake);
         currentShotsTaken = 0;
         animator.SetTrigger(SHOOT_TRIGGER);
+
+        PlayEnemyShootSound();
     }
 
     public void Shoot()
@@ -195,5 +198,11 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
             Debug.LogWarning("El nombre de la siguiente escena no está configurado en el inspector.");
         }
     }
+
+    private void PlayEnemyShootSound()
+    {
+        audioManager.Play("EnemyShootSound");
+    }
+
 }
 
